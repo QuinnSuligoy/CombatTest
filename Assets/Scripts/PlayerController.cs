@@ -10,11 +10,13 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody2D rb;
     private groundcheck groundcheck;
+    private attackpoint attackpoint;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         groundcheck = GameObject.Find("groundcheck").GetComponent<groundcheck>();
+        attackpoint = GameObject.Find("attackpoint").GetComponent<attackpoint>();
     }
 
     // Update is called once per frame
@@ -31,6 +33,12 @@ public class PlayerController : MonoBehaviour
         {
             jump();
         }
+
+        //Attack
+        if(Input.GetMouseButtonDown(0))
+        {
+            Attack();    
+        }
     }
 
     public void jump()
@@ -40,6 +48,15 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce,ForceMode2D.Impulse);
         }
         
+    }
+
+    public void Attack()
+    {
+        if(attackpoint.inRange)
+        {
+            Debug.Log("Attack");
+            attackpoint.enemyRb.AddForce(new Vector2(25,15), ForceMode2D.Impulse);
+        }
     }
 
 }
